@@ -31,7 +31,7 @@
                 return;
             }
 
-            var repository = context.OwinContext.Get<IOAuthIdentityRefreshRepository>();
+            var repository = context.OwinContext.Get<IRefreshTokenRepository>();
 
             string subject = context.Ticket.Identity.GetUserId();
 
@@ -39,7 +39,6 @@
 
             var token = new RefreshToken()
             {
-                Id = Guid.NewGuid().ToString("n"),
                 Subject = subject,
                 IssuedUtc = DateTime.UtcNow,
                 ExpiresUtc = DateTime.UtcNow.AddDays(7)
@@ -58,7 +57,7 @@
 
         public async Task ReceiveAsync(AuthenticationTokenReceiveContext context)
         {
-            var repository = context.OwinContext.Get<IOAuthIdentityRefreshRepository>();
+            var repository = context.OwinContext.Get<IRefreshTokenRepository>();
 
             var token = await repository.FindByAsync(context.Token);
 

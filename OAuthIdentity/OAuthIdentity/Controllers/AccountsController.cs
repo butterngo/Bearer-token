@@ -9,14 +9,13 @@
     using Microsoft.AspNet.Identity;
 
     [RoutePrefix("api/accounts")]
-    [Authorize]
-    public class AccountsController : ApiController
+    public class AccountsController : ApiBase
     {
         private readonly OAuthIdentityUserManager _userManager;
 
         public AccountsController ()
         {
-            _userManager = HttpContext.Current.GetOwinContext().GetUserManager<OAuthIdentityUserManager>();
+            _userManager = OwinContext.GetUserManager<OAuthIdentityUserManager>();
         }
 
         [HttpGet]

@@ -18,7 +18,11 @@ namespace OAuthIdentity
 
             app.CreatePerOwinContext<OAuthIdentityUserManager>(OAuthIdentityUserManager.Create);
 
-            app.CreatePerOwinContext<IOAuthIdentityRefreshRepository>(OAuthIdentityRefreshRepository.Create);
+            app.CreatePerOwinContext<IRefreshTokenRepository>(RefreshTokenRepository.Create);
+
+            app.CreatePerOwinContext<IClientRepository>(ClientRepository.Create);
+
+            app.CreatePerOwinContext<IClientUserRepository>(ClientUserRepository.Create);
 
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {

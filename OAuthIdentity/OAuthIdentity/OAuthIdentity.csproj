@@ -184,6 +184,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\ApiBase.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Enum\OAuthGrant.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -195,11 +198,27 @@
     <Compile Include="Migrations\201707011133236_initdb1.Designer.cs">
       <DependentUpon>201707011133236_initdb1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707011247266_initdb2.cs" />
+    <Compile Include="Migrations\201707011247266_initdb2.Designer.cs">
+      <DependentUpon>201707011247266_initdb2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707011358289_initdb4.cs" />
+    <Compile Include="Migrations\201707011358289_initdb4.Designer.cs">
+      <DependentUpon>201707011358289_initdb4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\ClientUser.cs" />
+    <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\OAuthIdentityContext.cs" />
     <Compile Include="Provider\ApplicationRefreshTokenProvider.cs" />
-    <Compile Include="Repository\IOAuthIdentityRefreshRepository.cs" />
-    <Compile Include="Repository\OAuthIdentityRefreshRepository.cs" />
+    <Compile Include="Repository\ClientUser\ClientUserRepository.cs" />
+    <Compile Include="Repository\ClientUser\IClientUserRepository.cs" />
+    <Compile Include="Repository\Client\IClientRepository.cs" />
+    <Compile Include="Repository\RefreshToken\IRefreshTokenRepository.cs" />
+    <Compile Include="Repository\Base\IRepository.cs" />
+    <Compile Include="Repository\Client\ClientRepository.cs" />
+    <Compile Include="Repository\RefreshToken\RefreshTokenRepository.cs" />
     <Compile Include="Models\OAuthIdentityRoleManager.cs" />
     <Compile Include="Models\OAuthIdentityUserManager.cs" />
     <Compile Include="Models\OAuthIdentityUserStore.cs" />
@@ -207,6 +226,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Provider\ApplicationOAuthProvider.cs" />
+    <Compile Include="Repository\Base\Repository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebApiConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -239,6 +259,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707011133236_initdb1.resx">
       <DependentUpon>201707011133236_initdb1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707011247266_initdb2.resx">
+      <DependentUpon>201707011247266_initdb2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707011358289_initdb4.resx">
+      <DependentUpon>201707011358289_initdb4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

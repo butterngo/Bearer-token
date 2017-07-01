@@ -2,30 +2,30 @@
 {
     using OAuthIdentity.Models;
     using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
-    using Microsoft.AspNet.Identity;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using System.Data.Entity;
+    using System.Web;
 
-    public class OAuthIdentityRefreshRepository: IOAuthIdentityRefreshRepository
+    public abstract class Repository<TEntity, TId, TContext> : IRepository<TEntity, TId>
+        where TEntity : class, IEntity<TId>
+        where TContext: DbContext
     {
-        private readonly OAuthIdentityContext _context;
+        protected readonly TContext _context;
 
-        public OAuthIdentityRefreshRepository():this(new OAuthIdentityContext()) { }
-
-        public OAuthIdentityRefreshRepository(OAuthIdentityContext context)
+        protected Repository(TContext context)
         {
             _context = context;
         }
 
-        public static OAuthIdentityRefreshRepository Create()
-        {
-            return new OAuthIdentityRefreshRepository();
-        }
+        private TId Id => (TId)Convert.ChangeType(Guid.NewGuid().ToString("n"), typeof(TId));
 
-        public async Task<RefreshToken> AddAsync(RefreshToken model)
+        public async Task<TEntity> AddAsync(TEntity model)
         {
+            model.Id = Id;
+
             _context.Entry(model).State = EntityState.Added;
 
             await _context.SaveChangesAsync();
@@ -40,7 +40,7 @@
             await DeleteAsync(entity);
         }
 
-        public async Task DeleteAsync(Expression<Func<RefreshToken, bool>> pression)
+        public async Task DeleteAsync(Expression<Func<TEntity, bool>> pression)
         {
             var entities = await Find(pression).ToListAsync();
 
@@ -53,14 +53,14 @@
             }
         }
 
-        public async Task DeleteAsync(RefreshToken model)
+        public async Task DeleteAsync(TEntity model)
         {
             _context.Entry(model).State = EntityState.Deleted;
 
             await _context.SaveChangesAsync();
         }
 
-        public async Task<RefreshToken> EditAsync(RefreshToken model)
+        public async Task<TEntity> EditAsync(TEntity model)
         {
             _context.Entry(model).State = EntityState.Modified;
 
@@ -69,24 +69,23 @@
             return model;
         }
 
-        public IQueryable<RefreshToken> Find(Expression<Func<RefreshToken, bool>> pression = null)
+        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> pression = null)
         {
             if (pression == null)
             {
-                return _context.RefreshTokens.AsNoTracking();
+                return _context.Set<TEntity>().AsNoTracking();
             }
-            return _context.RefreshTokens.AsNoTracking().Where(pression);
+            return _context.Set<TEntity>().AsNoTracking().Where(pression);
         }
 
-        public async Task<RefreshToken> FindByAsync(string id)
+        public async Task<TEntity> FindByAsync(string id)
         {
-            return await _context.RefreshTokens.AsNoTracking().FirstOrDefaultAsync(x => x.Id.Equals(id));
+            return await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         public void Dispose()
         {
             _context.Dispose();
         }
-
     }
 }

@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class RefreshToken
+    public class RefreshToken: IEntity<string>
     {
         public string Id { get; set; }
         public string Subject { get; set; }

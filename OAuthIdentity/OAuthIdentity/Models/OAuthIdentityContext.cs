@@ -27,5 +27,9 @@
         }
 
         public virtual IDbSet<RefreshToken> RefreshTokens { get; set; }
+
+        public virtual IDbSet<Client> Clients { get; set; }
+
+        public virtual IDbSet<ClientUser> ClientUser { get; set; }
     }
 }
