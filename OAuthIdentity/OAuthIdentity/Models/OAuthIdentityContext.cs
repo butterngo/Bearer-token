@@ -9,6 +9,7 @@
             : base("name=OAuthIdentity")
         {
         }
+
         public static OAuthIdentityContext Create()
         {
             return new OAuthIdentityContext();
@@ -24,5 +25,7 @@
             modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims", "dbo");
             modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins", "dbo");
         }
+
+        public virtual IDbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }

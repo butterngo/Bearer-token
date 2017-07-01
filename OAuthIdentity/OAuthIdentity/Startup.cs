@@ -2,15 +2,11 @@
 using Microsoft.Owin.Security.OAuth;
 using OAuthIdentity.Models;
 using OAuthIdentity.Provider;
+using OAuthIdentity.Repository;
 using Owin;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
 
 [assembly: OwinStartupAttribute(typeof(OAuthIdentity.Startup))]
-
 namespace OAuthIdentity
 {
     
@@ -21,12 +17,15 @@ namespace OAuthIdentity
             app.CreatePerOwinContext(OAuthIdentityContext.Create);
 
             app.CreatePerOwinContext<OAuthIdentityUserManager>(OAuthIdentityUserManager.Create);
-         
+
+            app.CreatePerOwinContext<IOAuthIdentityRefreshRepository>(OAuthIdentityRefreshRepository.Create);
+
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(20),
                 TokenEndpointPath = new PathString("/token"),
                 Provider = new ApplicationOAuthProvider(),
+                RefreshTokenProvider = new ApplicationRefreshTokenProvider(),
                 AllowInsecureHttp = true,
             };
 

@@ -191,11 +191,19 @@
     <Compile Include="Migrations\201706291616385_init-db.Designer.cs">
       <DependentUpon>201706291616385_init-db.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707011133236_initdb1.cs" />
+    <Compile Include="Migrations\201707011133236_initdb1.Designer.cs">
+      <DependentUpon>201707011133236_initdb1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\OAuthIdentityContext.cs" />
+    <Compile Include="Provider\ApplicationRefreshTokenProvider.cs" />
+    <Compile Include="Repository\IOAuthIdentityRefreshRepository.cs" />
+    <Compile Include="Repository\OAuthIdentityRefreshRepository.cs" />
     <Compile Include="Models\OAuthIdentityRoleManager.cs" />
     <Compile Include="Models\OAuthIdentityUserManager.cs" />
     <Compile Include="Models\OAuthIdentityUserStore.cs" />
+    <Compile Include="Models\RefreshToken.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Provider\ApplicationOAuthProvider.cs" />
@@ -228,6 +236,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201706291616385_init-db.resx">
       <DependentUpon>201706291616385_init-db.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707011133236_initdb1.resx">
+      <DependentUpon>201707011133236_initdb1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
