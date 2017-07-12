@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
+using OAuthIdentity.JwtToken;
 using OAuthIdentity.Models;
 using OAuthIdentity.Provider;
 using OAuthIdentity.Repository;
@@ -14,6 +15,8 @@ namespace OAuthIdentity
     {
         public void Configuration(IAppBuilder app)
         {
+            app.Use<TokenProviderMiddleware>(new TokenProviderOptions());
+
             app.CreatePerOwinContext(OAuthIdentityContext.Create);
 
             app.CreatePerOwinContext<OAuthIdentityUserManager>(OAuthIdentityUserManager.Create);
@@ -34,7 +37,6 @@ namespace OAuthIdentity
             };
 
             app.UseOAuthBearerTokens(OAuthServerOptions);
-
         }
     }
 }
